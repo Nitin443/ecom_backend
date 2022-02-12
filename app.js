@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+// import routes
+const userRoutes = require('./routes/user');
 
 //app
 const app = express();
@@ -8,10 +10,10 @@ const app = express();
 // db connection
 mongoose.connect(process.env.DATABASE, {useNewUrlParser: true});
 
-//routes
-app.get('/', (req, res) => {
-    res.send("hello world");
-});
+// middleware routes
+app.use('/', userRoutes);
+
+
 
 
 
