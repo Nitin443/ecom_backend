@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const {sayhi} = require('../controllers/user');
+const {signup} = require('../controllers/user');
 
 
-router.get('/signup', sayhi);
+router.get('/signup', signup);
 
 module.exports = router;
