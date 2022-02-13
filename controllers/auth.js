@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/auth');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');  // to generate token
 const { isNull } = require('lodash');
@@ -43,7 +43,15 @@ exports.signup = (req, res, next) => {
             });
 
             await user.save();
-            return res.json({ user });
+            const token = jwt.sign({ email: user.email, userRole: user.role, userId: user._id.toString(),}, process.env.JWT_SECRET, { expiresIn: '48h' });
+           return res.status(200).json({
+                token: token,
+                userId: user._id.toString(),
+                createdAt: user.createdAt,
+                Name: user.name,
+                role: user.role,
+                expiresIn: 3600 * 48,
+            });
 
         } catch (error) {
             const er = new Error('There is some error')
@@ -89,7 +97,7 @@ exports.login = (req, res) => {
                 bcrypt.compare(password, user.password, (err, response) => {
                     if (response === true) {
                         // if user found then generate token
-                        const token = jwt.sign({ email: user.email, userId: user._id.toString(), }, process.env.JWT_SECRET, { expiresIn: '48h' });
+                        const token = jwt.sign({ email: user.email,userRole: user.role, userId: user._id.toString(), }, process.env.JWT_SECRET, { expiresIn: '48h' });
 
                         res.status(200).json({
                             token: token,

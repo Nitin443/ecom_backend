@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const isAuth = require('../middleware/isAuth');
 
-const {signup, login, logout} = require('../controllers/user');
+const {signup, login, logout} = require('../controllers/auth');
 
 
 router.post('/signup', signup);

@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 // import routes
-const userRoutes = require('./routes/user');
+const authRoutes = require('./routes/auth');
 
 //app
 const app = express();
@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // middleware routes
-app.use('/', userRoutes);
+app.use('/', authRoutes);
 
 
 

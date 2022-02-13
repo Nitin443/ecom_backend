@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
  try {
      decodeToken = jwt.verify(token, process.env.JWT_SECRET);
  } catch (error) {
-    const er = new Error('Error in decode token');
+    const er = new Error('Error in decode token or login again or do signup');
     res.status(500).json({message: er.message});
  }
 
@@ -25,5 +25,6 @@ module.exports = (req, res, next) => {
  }
 
  req.userId = decodeToken.userId;
+ req.role = decodeToken.userRole;
  next();
 };
