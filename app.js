@@ -11,7 +11,14 @@ const userRoutes = require('./routes/user');
 const app = express();
 
 // db connection
-mongoose.connect(process.env.DATABASE, {useNewUrlParser: true});
+mongoose.connect(process.env.DATABASE, {useNewUrlParser: true}, (err) => {
+    if(err){
+        console.log('Database not connected');
+    }else{
+        console.log('Database connected');
+    }
+
+});
 
 //middleware
 app.use(morgan('dev'));

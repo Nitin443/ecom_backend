@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-//const crypto = require('crypto');
-//const uuidv1 = require('uuid/v1');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -23,18 +21,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    salt: String,
     role: {
         type: Number,
-        default: 0
+        default: 0,
+        enum: [0, 1]
     },
     history: {
         type: Array,
         default: []
-    }
+    },
 }, {timestamps: true});
 
 
-// hashing of password remain 3(2)
 
 module.exports = mongoose.model('User', userSchema);
