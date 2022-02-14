@@ -1,7 +1,7 @@
 const Category = require('../models/category');
 const Joi = require('joi');
 
-exports.create = (req, res) => {
+exports.createCategory = (req, res) => {
     
     (async() => {
         try {
