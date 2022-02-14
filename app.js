@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 // import routes
 const authRoutes = require('./routes/auth');
+const categoryRoutes = require('./routes/category');
 
 //app
 const app = express();
@@ -27,6 +28,7 @@ app.use(cookieParser());
 
 // middleware routes
 app.use('/', authRoutes);
+app.use('/category', categoryRoutes);
 
 
 

@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     role: {
         type: Number,
         default: 0,
-        enum: [0, 1]
+        enum: [0, 1]  // 0  for user  // 1 for admin
     },
     history: {
         type: Array,

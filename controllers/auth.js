@@ -55,7 +55,7 @@ exports.signup = (req, res, next) => {
 
         } catch (error) {
             const er = new Error('There is some error')
-            return res.status(400).json({ message: er });
+            return res.status(400).json({ message: er.message });
         }
     })();
 };
