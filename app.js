@@ -25,11 +25,11 @@ mongoose.connect(process.env.DATABASE, {useNewUrlParser: true}, (err) => {
 
 // handle image upload
 const fileStorage = multer.diskStorage({
-    destination = (req, file, cb) => {
+    destination: (req, file, cb) => {
         cb(null, 'images');
     },
-    filename = (req, file, cb) => {
-        cb(null, newDate().toString() + '-' + file.originalname);
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
     }
 });
 
