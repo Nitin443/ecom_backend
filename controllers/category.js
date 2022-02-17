@@ -206,3 +206,12 @@ exports.deleteCategory = (req, res) => {
         }
     })();   
   }
+
+
+
+
+
+
+
+
+
