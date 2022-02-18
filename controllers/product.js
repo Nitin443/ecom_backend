@@ -253,3 +253,51 @@ exports.getList = (req, res) => {
         }
     })();
 }
+
+
+// get product list based on product related category
+
+exports.getRelatedCategoryProduct = (req, res) => {
+    (async() => {
+
+
+
+        try {
+            /**
+              * joi validation
+              */
+            const schema = Joi.object({
+                productId: Joi.string().required(),
+            });
+
+            // schema options
+            const options = {
+                abortEarly: false, // include all errors
+                allowUnknown: true, // ignore unknown props
+            };
+
+            const { error, value } = schema.validate(req.params, options);
+
+            if (error) {
+                return res.status(400).json({ errorMessage: error.details });
+            }
+
+            let limit = req.query.limit ? parseInt(req.query.limit) : 5;
+            const productId = req.params.productId;
+
+            const product = await Product.findById(productId);
+            const proCategory = product.category;
+
+            const relatedProList = await Product.find({category: proCategory}).limit(limit);
+
+            res.status(200).json({list: relatedProList});
+         
+     } catch (error) {
+        const er = new Error('There is some error')
+        return res.status(400).json({ message: er.message });
+     }
+
+
+    })();
+
+}
