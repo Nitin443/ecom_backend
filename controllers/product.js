@@ -241,7 +241,7 @@ exports.getList = (req, res) => {
 
             let order = req.query.order ? req.query.order : "asc";
             let sortBy = req.query.sortBy ? req.query.sortBy : "sold";
-            let limit = req.query.limit ? parseInt(req.query.order) : 5;
+            let limit = req.query.limit ? parseInt(req.query.limit) : 5;
 
             const productList = await Product.find().sort([[sortBy, order]]).limit(limit);
 
@@ -301,3 +301,45 @@ exports.getRelatedCategoryProduct = (req, res) => {
     })();
 
 }
+
+
+exports.searchProduct = (req, res) => {
+    (async() => {
+
+    try {
+            let order = req.body.order ? req.body.order : "desc";
+            let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
+            let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+            let skip = parseInt(req.body.skip);
+
+            let searchFields = {};
+
+            for (let key in req.body.filters) {
+                        if (req.body.filters[key].length > 0) {
+                            if (key === "price") {
+                                // gte -  greater than price [0-10]
+                                // lte - less than
+                                searchFields[key] = {
+                                    $gte: req.body.filters[key][0],
+                                    $lte: req.body.filters[key][1]
+                                };
+                            } else {
+                                searchFields[key] = req.body.filters[key];
+                            }
+                        }
+                    }
+            
+        const searchPro = await Product.find(searchFields).populate("category").sort([[sortBy, order]]).skip(skip).limit(limit);
+
+        res.status(200).json({SearchProduct: searchPro});
+        
+    } catch (error) {
+        const er = new Error('There is some error')
+        return res.status(400).json({ message: er.message });
+    }
+
+
+
+    })();
+}
+

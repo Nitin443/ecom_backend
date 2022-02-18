@@ -11,9 +11,9 @@ exports.signup = (req, res, next) => {
     (async () => {
 
         try {
-             /**
-             * joi validation
-             */
+            /**
+            * joi validation
+            */
             const schema = Joi.object({
                 name: Joi.string().required(),
                 email: Joi.string().email().required(),
@@ -30,7 +30,7 @@ exports.signup = (req, res, next) => {
             const { error, value } = schema.validate(req.body, options);
 
             if (error) {
-            return res.status(400).json({ errorMessage: error.details });
+                return res.status(400).json({ errorMessage: error.details });
             }
 
             const hashPassword = await bcrypt.hash(req.body.password, saltRound);
@@ -43,8 +43,8 @@ exports.signup = (req, res, next) => {
             });
 
             await user.save();
-            const token = jwt.sign({ email: user.email, userRole: user.role, userId: user._id.toString(),}, process.env.JWT_SECRET, { expiresIn: '48h' });
-           return res.status(200).json({
+            const token = jwt.sign({ email: user.email, userRole: user.role, userId: user._id.toString(), }, process.env.JWT_SECRET, { expiresIn: '48h' });
+            return res.status(200).json({
                 token: token,
                 userId: user._id.toString(),
                 createdAt: user.createdAt,
@@ -81,7 +81,7 @@ exports.login = (req, res) => {
             const { error, value } = schema.validate(req.body, options);
 
             if (error) {
-            return res.status(400).json({ errorMessage: error.details });
+                return res.status(400).json({ errorMessage: error.details });
             }
 
             const email = req.body.email;
@@ -97,7 +97,7 @@ exports.login = (req, res) => {
                 bcrypt.compare(password, user.password, (err, response) => {
                     if (response === true) {
                         // if user found then generate token
-                        const token = jwt.sign({ email: user.email,userRole: user.role, userId: user._id.toString(), }, process.env.JWT_SECRET, { expiresIn: '48h' });
+                        const token = jwt.sign({ email: user.email, userRole: user.role, userId: user._id.toString(), }, process.env.JWT_SECRET, { expiresIn: '48h' });
 
                         res.status(200).json({
                             token: token,
@@ -132,3 +132,53 @@ exports.logout = (req, res) => {
         }
     })();
 };
+
+
+
+exports.userDeatails = (req, res) => {
+    (async () => {
+        try {
+
+            const userId = req.userId;
+
+            const user = await User.findById(userId);
+
+            if (isNull(user)) {
+                const er = new Error('User not found.. try again')
+                return res.status(400).json({ message: er.message });
+            }
+
+            res.status(200).json({ UserDetails: user });
+
+        } catch (error) {
+            const er = new Error('There is some error')
+            return res.status(400).json({ message: er.message });
+        }
+    })();
+}
+
+exports.updateUserDeatails = (req, res) => {
+    (async () => {
+        try {
+
+            const userId = req.userId;
+
+            const updateContent = req.body;
+            let opts = {
+                runValidators: true,
+                setDefaultsOnInsert: true,
+                upsert: true,
+                context: 'query'
+            };
+
+            const updateUser = await User.findByIdAndUpdate(userId, updateContent, opts);
+          
+            res.status(200).json({ UpdateUserDetails: updateUser });
+
+
+        } catch (error) {
+            const er = new Error('There is some error')
+            return res.status(400).json({ message: er.message });
+        }
+    })()
+}

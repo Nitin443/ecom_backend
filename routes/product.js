@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const isAuth = require('../middleware/isAuth');
 
-const {createProduct, getProduct, updateProduct, deleteProduct, getProductById, getList, getRelatedCategoryProduct} = require('../controllers/product');
+const {createProduct, getProduct, updateProduct, deleteProduct, getProductById, getList, getRelatedCategoryProduct, searchProduct} = require('../controllers/product');
 
 router.post('/create', isAuth, createProduct);
 router.get('/get', getProduct);
@@ -13,6 +13,8 @@ router.delete('/delete/:productId', isAuth, deleteProduct);
 router.get('/list', getList);
 // get related category product
 router.get('/relatedCategory/:productId', getRelatedCategoryProduct);
+// search product
+router.post('/search', searchProduct);
 
 module.exports = router;
 
