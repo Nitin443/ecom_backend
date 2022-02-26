@@ -18,7 +18,7 @@ exports.signup = (req, res, next) => {
                 name: Joi.string().required(),
                 email: Joi.string().email().required(),
                 password: Joi.string().required(),
-              //  about: Joi.string().required()
+               // about: Joi.string().required()
             });
 
             // schema options
@@ -54,8 +54,7 @@ exports.signup = (req, res, next) => {
             });
 
         } catch (error) {
-            const er = new Error('There is some error')
-            return res.status(400).json({ message: er.message });
+            return res.status(400).json({ errorMessage: error });
         }
     })();
 };
@@ -91,8 +90,7 @@ exports.login = (req, res) => {
 
             // if user not found
             if (isNull(user)) {
-                const error = new Error('User not found with this email')
-                return res.status(400).json({ message: error });
+                return res.status(400).json({ errorMessage: "user not found with this email..." });
             } else {
                 bcrypt.compare(password, user.password, (err, response) => {
                     if (response === true) {
@@ -107,6 +105,8 @@ exports.login = (req, res) => {
                             role: user.role,
                             expiresIn: 3600 * 48,
                         });
+                    }else{
+                        return res.status(400).json({ errorMessage: "password is not correct..." });
                     }
                 });
             }
