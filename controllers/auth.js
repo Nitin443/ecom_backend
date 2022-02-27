@@ -30,7 +30,7 @@ exports.signup = (req, res, next) => {
             const { error, value } = schema.validate(req.body, options);
 
             if (error) {
-                return res.status(400).json({ errorMessage: error.details });
+                return res.status(400).json({ errorMessage: error.details[0].message });
             }
 
             const hashPassword = await bcrypt.hash(req.body.password, saltRound);
@@ -73,14 +73,14 @@ exports.login = (req, res) => {
 
             // schema options
             const options = {
-                abortEarly: false, // include all errors
+                abortEarly: true, // include all errors
                 allowUnknown: true, // ignore unknown props
             };
 
             const { error, value } = schema.validate(req.body, options);
 
             if (error) {
-                return res.status(400).json({ errorMessage: error.details });
+                return res.status(400).json({ errorMessage: error.details[0].message });
             }
 
             const email = req.body.email;
