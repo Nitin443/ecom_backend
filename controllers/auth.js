@@ -103,6 +103,7 @@ exports.login = (req, res) => {
                             createdAt: user.createdAt,
                             Name: user.name,
                             role: user.role,
+                            email: user.email,
                             expiresIn: 3600 * 48,
                         });
                     }else{
