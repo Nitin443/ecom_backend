@@ -240,16 +240,16 @@ exports.getList = (req, res) => {
         try {
 
             let order = req.query.order ? req.query.order : "asc";
-            let sortBy = req.query.sortBy ? req.query.sortBy : "sold";
+            let sortBy = req.query.sortBy ? req.query.sortBy : "createdAt";
             let limit = req.query.limit ? parseInt(req.query.limit) : 5;
 
             const productList = await Product.find().sort([[sortBy, order]]).limit(limit);
 
-            return res.status(200).json({ ProductList: productList, message: 'product list fetch sucessfully' });
+            return res.status(200).json({ ProductList: productList });
 
         } catch (error) {
             const er = new Error('There is some error')
-            return res.status(400).json({ message: er.message });
+            return res.status(400).json({ errorMessage: er.message });
         }
     })();
 }
