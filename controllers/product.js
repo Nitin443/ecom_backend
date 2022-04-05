@@ -309,7 +309,7 @@ exports.searchProduct = (req, res) => {
     try {
             let order = req.body.order ? req.body.order : "desc";
             let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
-            let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+            let limit = req.body.limit ? parseInt(req.body.limit) : 5;
             let skip = parseInt(req.body.skip);
 
             let searchFields = {};
@@ -329,13 +329,13 @@ exports.searchProduct = (req, res) => {
                         }
                     }
             
-        const searchPro = await Product.find(searchFields).populate("category").sort([[sortBy, order]]).skip(skip).limit(limit);
+        const searchPro = await Product.find({searchFields}).sort([[sortBy, order]]).skip(skip).limit(limit);
 
         res.status(200).json({SearchProduct: searchPro});
         
     } catch (error) {
         const er = new Error('There is some error')
-        return res.status(400).json({ message: er.message });
+        return res.status(400).json({ errorMessage: er.message });
     }
 
 
