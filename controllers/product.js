@@ -294,7 +294,7 @@ exports.getRelatedCategoryProduct = (req, res) => {
          
      } catch (error) {
         const er = new Error('There is some error')
-        return res.status(400).json({ message: er.message });
+        return res.status(400).json({ errorMessage: er.message });
      }
 
 
@@ -332,6 +332,36 @@ exports.searchProduct = (req, res) => {
         const searchPro = await Product.find({searchFields}).sort([[sortBy, order]]).skip(skip).limit(limit);
 
         res.status(200).json({SearchProduct: searchPro});
+        
+    } catch (error) {
+        const er = new Error('There is some error')
+        return res.status(400).json({ errorMessage: er.message });
+    }
+
+
+
+    })();
+}
+
+
+
+exports.listSearch = (req, res) => {
+    (async() => {
+
+    try {
+            const query = {};
+
+            if(req.query.search){
+                query.name = {$regex: req.query.search, $option: 'i'};
+
+                if(req.query.category && req.query.category !== 'All'){
+                    query.category = req.query.category;
+                }
+            }
+
+            const productList = await Product.find(query);
+
+            res.status(200).json({ProductList: productList});
         
     } catch (error) {
         const er = new Error('There is some error')
