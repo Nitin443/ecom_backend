@@ -349,23 +349,24 @@ exports.listSearch = (req, res) => {
     (async() => {
 
     try {
-            const query = {};
+           // const query = {};
 
-            if(req.query.search){
-                query.name = {$regex: req.query.search, $option: 'i'};
+            // if(req.query.search){
+            //     query.name = {$regex: req.query.search, $option: 'i'};
 
-                if(req.query.category && req.query.category !== 'All'){
-                    query.category = req.query.category;
-                }
-            }
+            //     if(req.query.category && req.query.category !== 'All'){
+            //         query.category = req.query.category;
+            //     }
+            // }
+            const que = req.query.category;
+          //  const queryName = req.query.search;  we will use regex to search similar name products
 
-            const productList = await Product.find(query);
+            const productList = await Product.find({category: que});
 
             res.status(200).json({ProductList: productList});
         
     } catch (error) {
-        const er = new Error('There is some error')
-        return res.status(400).json({ errorMessage: er.message });
+        return res.status(400).json({ errorMessage: error });
     }
 
 
