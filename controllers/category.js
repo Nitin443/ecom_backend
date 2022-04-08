@@ -93,9 +93,9 @@ exports.getCategory = (req, res) => {
     (async () => {
         try {
 
-            if (req.role === 0) {
-                return res.status(400).json({ errorMessage: 'you can not get category. only admin can get ' })
-            }
+            // if (req.role === 0) {
+            //     return res.status(400).json({ errorMessage: 'you can not get category. only admin can get ' })
+            // }
 
             const category = await Category.find();
             return res.status(200).json({ Category: category });

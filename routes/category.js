@@ -6,7 +6,7 @@ const {createCategory, getCategoryById, getCategory, updateCategory, deleteCateg
 
 router.post('/create', isAuth, createCategory);
 router.get('/get/:categoryId', isAuth, getCategoryById);
-router.get('/get', isAuth, getCategory);
+router.get('/get', getCategory);
 router.put('/update/:categoryId', isAuth, updateCategory);
 router.delete('/delete/:categoryId', isAuth, deleteCategory);
 

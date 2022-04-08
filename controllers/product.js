@@ -108,14 +108,14 @@ exports.getProductById = (req, res) => {
             const getProduct = await Product.findById(productId);
 
             if (isNull(getProduct)) {
-                return res.status(422).json({ message: 'Product with given id is not exit.' });
+                return res.status(422).json({ errorMessage: 'Product with given id is not exit.' });
             }
 
             return res.status(200).json({ Product: getProduct });
 
         } catch (error) {
             const er = new Error('There is some error')
-            return res.status(400).json({ message: er.message });
+            return res.status(400).json({ errorMessage: er.message });
         }
     })();
 
