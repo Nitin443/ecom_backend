@@ -153,7 +153,7 @@ exports.userDeatails = (req, res) => {
 
         } catch (error) {
             const er = new Error('There is some error')
-            return res.status(400).json({ message: er.message });
+            return res.status(400).json({ errorMessage: er.message });
         }
     })();
 }
@@ -179,7 +179,7 @@ exports.updateUserDeatails = (req, res) => {
 
         } catch (error) {
             const er = new Error('There is some error')
-            return res.status(400).json({ message: er.message });
+            return res.status(400).json({ errorMessage: er.message });
         }
     })()
 }
