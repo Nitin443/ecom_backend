@@ -29,10 +29,12 @@ const productSchema = new mongoose.Schema({
     },
     imgUrl: {
         type: String,
-        require: true
     },
     shippy: {
         type: Boolean,
+    },
+    url: {
+        type: String
     }
 }, {timestamps: true});
 

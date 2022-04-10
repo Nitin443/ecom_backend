@@ -34,15 +34,15 @@ exports.createProduct = (req, res) => {
                 return res.status(400).json({ errorMessage: 'you can not create Product. only admin can create' })
             }
 
-            if (!req.file) {
-                return res.status(422).json({ errorMessage: 'Image not uploaded. Try again !' });
-            }
+            // if (!req.file) {
+            //     return res.status(422).json({ errorMessage: 'Image not uploaded. Try again !' });
+            // }
 
 
-            // 1mb = 1000000  // 1kb = 1000
-            if (!req.file.size > 2000000) {
-                return res.status(422).json({ errorMessage: 'Image size large than 2MB upload less mb image.' });
-            }
+            // // 1mb = 1000000  // 1kb = 1000
+            // if (!req.file.size > 2000000) {
+            //     return res.status(422).json({ errorMessage: 'Image size large than 2MB upload less mb image.' });
+            // }
 
             const product = new Product({
                 name: req.body.name,
@@ -51,7 +51,8 @@ exports.createProduct = (req, res) => {
                 quantity: req.body.quantity,
                 category: req.body.category,
                 imgUrl: req.file.path,
-                shippy: req.body.shippy     
+                shippy: req.body.shippy,
+                url: req.body.url     
             });
 
             await product.save();

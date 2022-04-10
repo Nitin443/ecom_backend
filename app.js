@@ -11,6 +11,7 @@ const multer = require('multer');
 const authRoutes = require('./routes/auth');
 const categoryRoutes = require('./routes/category');
 const productRoutes = require('./routes/product');
+const treeRoutes = require('./routes/tree');
 
 //app
 const app = express();
@@ -54,6 +55,7 @@ app.use(cors());
 app.use('/', authRoutes);
 app.use('/category', categoryRoutes);
 app.use('/product', productRoutes);
+app.use('/tree', treeRoutes);
 
 
 
