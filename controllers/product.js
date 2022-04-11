@@ -75,7 +75,7 @@ exports.getProduct = (req, res) => {
 
         } catch (error) {
             const er = new Error('There is some error')
-            return res.status(400).json({ message: er.message });
+            return res.status(400).json({ errorMessage: er.message });
         }
     })();
 }
@@ -146,7 +146,7 @@ exports.updateProduct = (req, res) => {
             }
 
             if (req.role === 0) {
-                return res.status(400).json({ message: 'you can not update Product. only admin can update' })
+                return res.status(400).json({ errorMessage: 'you can not update Product. only admin can update' })
             }
 
 
@@ -159,15 +159,15 @@ exports.updateProduct = (req, res) => {
                 upsert: true,
                 context: 'query'
             };
-            let imgUrl = req.body.image;
+            // let imgUrl = req.body.image;
 
-            if (req.file) {
-                imgUrl = req.file.path;
-            }
+            // if (req.file) {
+            //     imgUrl = req.file.path;
+            // }
 
-            if (!imgUrl) {
-                return res.status(422).json({ message: 'Image not uploaded' })
-            }
+            // if (!imgUrl) {
+            //     return res.status(422).json({ message: 'Image not uploaded' })
+            // }
 
 
             const updateProduct = await Product.findByIdAndUpdate(productId, updateContent, opts);
