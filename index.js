@@ -52,7 +52,7 @@ app.use(cors());
 
 
 // middleware routes
-app.use('/', function(req, res){
+app.get('/', function(req, res){
   res.send('Backend is running');
 });
 app.use('/', authRoutes);
