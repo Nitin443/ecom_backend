@@ -4,7 +4,8 @@
   "description": "this is ecom app backend",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon index.js",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -27,3 +28,5 @@
     "uuidv1": "^1.6.14"
   }
 }
+
+
