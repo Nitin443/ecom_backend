@@ -52,6 +52,9 @@ app.use(cors());
 
 
 // middleware routes
+app.use('/', function(req, res){
+  res.send('Backend is running');
+});
 app.use('/', authRoutes);
 app.use('/category', categoryRoutes);
 app.use('/product', productRoutes);
